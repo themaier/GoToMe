@@ -1,12 +1,11 @@
-package com.asd.gotome.usermanagement.code.controller;
+package com.asd.gotome.usermanagement.controller;
 
-import com.asd.gotome.usermanagement.code.entity.User;
-import com.asd.gotome.usermanagement.code.service.UserService;
+import com.asd.gotome.usermanagement.entity.User;
+import com.asd.gotome.usermanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 

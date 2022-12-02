@@ -1,4 +1,4 @@
-package com.asd.gotome.usermanagement.code.entity;
+package com.asd.gotome.usermanagement.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

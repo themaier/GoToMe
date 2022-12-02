@@ -1,7 +1,7 @@
-package com.asd.gotome.usermanagement.code.service;
+package com.asd.gotome.usermanagement.service;
 
-import com.asd.gotome.usermanagement.code.entity.User;
-import com.asd.gotome.usermanagement.code.repo.UserRepository;
+import com.asd.gotome.usermanagement.entity.User;
+import com.asd.gotome.usermanagement.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
