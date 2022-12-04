@@ -36,7 +36,7 @@ public class UserRestController {
         if (userWithUsername.getLockDateAndTime() == null) {
             User user = userService.findByUsernameAndPassword(username, password);
             if (user == null) {
-                if (userWithUsername.getFailedLogin() < 3) {
+                if (userWithUsername.getFailedLogin() < 2) {
                     userWithUsername.setFailedLogin(userWithUsername.getFailedLogin() + 1);
                     userService.updateUser(userWithUsername);
                     return "Benutzername oder Passwort nicht korrekt";
