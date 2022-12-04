@@ -1,5 +1,6 @@
 package com.asd.gotome.usermanagement.service;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.asd.gotome.usermanagement.entity.User;
 import com.asd.gotome.usermanagement.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ public class UserService {
     public User saveUser(User user) {
         User savedUser = null;
         if (userRepository.findByUsername(user.getUsername()) == null) {
+            user.setPassword(BCrypt.withDefaults().hashToString(12, user.getPassword().toCharArray()));
             savedUser = userRepository.save(user);
             System.out.println("save successful for " + savedUser.getFirstname() + " " + savedUser.getLastname() + " with Id " + savedUser.getId());
         } else {
@@ -42,9 +44,13 @@ public class UserService {
     }
 
     public User findByUsernameAndPassword(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password);
+        User user = userRepository.findByUsername(username);
+        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
+        if(result.verified) {
+            return userRepository.findByUsername(username);
+        }
+        return null;
     }
-
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }

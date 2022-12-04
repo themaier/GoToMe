@@ -1,5 +1,6 @@
 package com.asd.gotome.usermanagement.controller;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.asd.gotome.usermanagement.entity.User;
 import com.asd.gotome.usermanagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,9 +73,10 @@ public class UserRestController {
     @GetMapping("/changePassword")
     public String changePassword(@RequestParam String password, @RequestParam String repeatedPassword, @RequestParam String oldPassword) {
         if (user != null) {
-            if (user.getPassword().equals(oldPassword)) {
+            BCrypt.Result result = BCrypt.verifyer().verify(oldPassword.toCharArray(), user.getPassword());
+            if (result.verified) {
                 if (password.equals(repeatedPassword)) {
-                    user.setPassword(password);
+                    user.setPassword(BCrypt.withDefaults().hashToString(12, password.toCharArray()));
                     userService.updateUser(user);
                 } else {
                     return "Passwörter stimmen nicht überein";
