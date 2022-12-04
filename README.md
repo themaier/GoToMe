@@ -9,7 +9,7 @@ Bei dieser Anwendung handelt es sich um ein Benutzerverwaltungssystem, das die R
   - Java Version 17
   - Maven
   - MySQL (Einstellungen können in application.properties geändert werden)
-- Das Programm läuft dann auf http://localhost:8080/ ((Einstellungen können in application.properties geändert werden))
+- Das Programm läuft dann auf http://localhost:8080/ (Einstellungen können in application.properties geändert werden)
 
 
 Das System besteht aus mehreren Rest-Services:
