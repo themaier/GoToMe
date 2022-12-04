@@ -1,7 +1,7 @@
 # GoToMe
 Projekt: ASD
 
-Bei diesem Projekt handelt es sich um ein Benutzerverwaltungssystem, das die Registrierung, Anmeldung, Abmeldung, Verwaltung und Löschung von Benutzerkonten ermöglicht.
+Bei dieser Anwendung handelt es sich um ein Benutzerverwaltungssystem, das die Registrierung, Anmeldung, Abmeldung, Verwaltung und Löschung von Benutzerkonten ermöglicht.
 
 
 - UserManagementApplication starten um das Programm zu starten.
