@@ -1,2 +1,0 @@
-# GoToMe
-Projekt: ASD
