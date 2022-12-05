@@ -30,7 +30,7 @@ public class UserRestController {
         return userService.saveUser(user);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password) {
         User userWithUsername = userService.findByUsername(username);
         if (userWithUsername.getLockDateAndTime() == null) {
@@ -61,7 +61,7 @@ public class UserRestController {
         return "Erfolgreich angemeldet als " + user.getUsername();
     }
 
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public String logout() {
         if (user != null) {
             user = null;
@@ -70,7 +70,7 @@ public class UserRestController {
         return "Abmeldung ohne angemeldeten User nicht möglich";
     }
 
-    @GetMapping("/changePassword")
+    @PutMapping ("/changePassword")
     public String changePassword(@RequestParam String password, @RequestParam String repeatedPassword, @RequestParam String oldPassword) {
         if (user != null) {
             BCrypt.Result result = BCrypt.verifyer().verify(oldPassword.toCharArray(), user.getPassword());
