@@ -1,3 +1,4 @@
+
 package com.asd.gotome.usermanagement.service;
 
 
@@ -17,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 //@SpringBootTest
 @DataJpaTest
 class UserServiceTest {
-
     @Autowired
     private UserService userService;
 

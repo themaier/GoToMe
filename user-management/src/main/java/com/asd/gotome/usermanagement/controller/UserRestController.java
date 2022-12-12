@@ -92,7 +92,9 @@ public class UserRestController {
     @DeleteMapping("/deleteUser")
     public String deleteUser(@RequestParam String password) {
         if (user != null) {
-            if (user.getPassword().equals(password)) {
+
+            BCrypt.Result result = BCrypt.verifyer().verify( password.toCharArray(), user.getPassword());
+            if (result.verified) {
                 userService.deleteUserById(user.getId());
                 return "Account erfolgreich gelöscht";
             } else {
