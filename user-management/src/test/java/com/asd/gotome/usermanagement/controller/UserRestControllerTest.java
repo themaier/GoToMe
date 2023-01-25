@@ -135,7 +135,6 @@ class UserRestControllerTest {
         assertEquals(userRestController.deleteUser("Maschine"), "Account erfolgreich gelöscht");
     }
 
-
     @AfterEach
     public void revert() {
         userRestController.logout();
