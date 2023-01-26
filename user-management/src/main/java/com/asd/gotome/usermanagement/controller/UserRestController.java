@@ -19,7 +19,6 @@ public class UserRestController {
     private static User user;
 
     /**
-     *
      * @return List of users
      */
     @GetMapping("/users")
@@ -30,7 +29,6 @@ public class UserRestController {
     }
 
     /**
-     *
      * @param user to be saved
      * @return saved user
      */
@@ -40,7 +38,6 @@ public class UserRestController {
     }
 
     /**
-     *
      * @param username of the user
      * @param password of the user
      * @return success or failure message
@@ -52,14 +49,10 @@ public class UserRestController {
             User user = userService.findByUsernameAndPassword(username, password);
             if (user == null) {
                 if (userWithUsername.getFailedLogin() < 2) {
-                    userWithUsername.setFailedLogin(userWithUsername.getFailedLogin() + 1);
-                    userService.updateUser(userWithUsername);
+                    setFailedLogin(userWithUsername);
                     return "Benutzername oder Passwort nicht korrekt";
                 } else {
-                    userWithUsername.setFailedLogin(userWithUsername.getFailedLogin() + 1);
-                    Date date = new Date(System.currentTimeMillis() + 60000L);
-                    userWithUsername.setLockDateAndTime(date);
-                    userService.updateUser(userWithUsername);
+                    updateLockForUser(userWithUsername);
                     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.YYYY hh:mm");
                     return "Benutzer bis zum " + simpleDateFormat.format(userWithUsername.getLockDateAndTime()) + " Uhr gesperrt";
                 }
@@ -77,7 +70,6 @@ public class UserRestController {
     }
 
     /**
-     *
      * @return success or failure message
      */
     @PostMapping("/logout")
@@ -90,13 +82,12 @@ public class UserRestController {
     }
 
     /**
-     *
-     * @param password new password
+     * @param password         new password
      * @param repeatedPassword repeated new password
-     * @param oldPassword old password
+     * @param oldPassword      old password
      * @return success or failure message
      */
-    @PutMapping ("/changePassword")
+    @PutMapping("/changePassword")
     public String changePassword(@RequestParam String password, @RequestParam String repeatedPassword, @RequestParam String oldPassword) {
         if (user != null) {
             BCrypt.Result result = BCrypt.verifyer().verify(oldPassword.toCharArray(), user.getPassword());
@@ -116,7 +107,6 @@ public class UserRestController {
     }
 
     /**
-     *
      * @param password password of the user
      * @return success or failure message
      */
@@ -124,7 +114,7 @@ public class UserRestController {
     public String deleteUser(@RequestParam String password) {
         if (user != null) {
 
-            BCrypt.Result result = BCrypt.verifyer().verify( password.toCharArray(), user.getPassword());
+            BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
             if (result.verified) {
                 userService.deleteUserById(user.getId());
                 return "Account erfolgreich gelöscht";
@@ -133,5 +123,18 @@ public class UserRestController {
             }
         }
         return "Account löschen ohne angemeldeten User nicht möglich";
+    }
+
+    private void updateLockForUser(User userWithUsername) {
+        userWithUsername.setFailedLogin(userWithUsername.getFailedLogin() + 1);
+        Date date = new Date(System.currentTimeMillis() + 60000L);
+        userWithUsername.setLockDateAndTime(date);
+        userService.updateUser(userWithUsername);
+
+    }
+
+    private void setFailedLogin(User userWithUsername) {
+        userWithUsername.setFailedLogin(userWithUsername.getFailedLogin() + 1);
+        userService.updateUser(userWithUsername);
     }
 }
