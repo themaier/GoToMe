@@ -18,6 +18,10 @@ public class UserRestController {
 
     private static User user;
 
+    /**
+     *
+     * @return List of users
+     */
     @GetMapping("/users")
     public List<User> findAllUsers() {
         List<User> users = userService.findAllUsers();
@@ -25,11 +29,22 @@ public class UserRestController {
         return users;
     }
 
+    /**
+     *
+     * @param user to be saved
+     * @return saved user
+     */
     @PostMapping("/saveUser")
     public User saveUser(@RequestBody User user) {
         return userService.saveUser(user);
     }
 
+    /**
+     *
+     * @param username of the user
+     * @param password of the user
+     * @return success or failure message
+     */
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password) {
         User userWithUsername = userService.findByUsername(username);
@@ -61,6 +76,10 @@ public class UserRestController {
         return "Erfolgreich angemeldet als " + user.getUsername();
     }
 
+    /**
+     *
+     * @return success or failure message
+     */
     @PostMapping("/logout")
     public String logout() {
         if (user != null) {
@@ -70,6 +89,13 @@ public class UserRestController {
         return "Abmeldung ohne angemeldeten User nicht möglich";
     }
 
+    /**
+     *
+     * @param password new password
+     * @param repeatedPassword repeated new password
+     * @param oldPassword old password
+     * @return success or failure message
+     */
     @PutMapping ("/changePassword")
     public String changePassword(@RequestParam String password, @RequestParam String repeatedPassword, @RequestParam String oldPassword) {
         if (user != null) {
@@ -89,6 +115,11 @@ public class UserRestController {
         return "Passwortänderung ohne angemeldeten User nicht möglich";
     }
 
+    /**
+     *
+     * @param password password of the user
+     * @return success or failure message
+     */
     @DeleteMapping("/deleteUser")
     public String deleteUser(@RequestParam String password) {
         if (user != null) {
